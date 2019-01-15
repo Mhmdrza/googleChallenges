@@ -1,24 +1,25 @@
 const S = "abppplee"
-let D = ["able", "ale", "apple", "bale", "kangaroo"]
-let theBiggest = 0
+const D = ["ablee", "ale", "apple", "bale", "kangaroo"]
+let theBiggestSubsqnce = 0
 let indexOfThTarget;
 D.forEach( (word,index) =>{
-  let SCopy = S.slice()
-	let lengthOfSub = 0;
-  word.split('').some( (letter)=> {
-    let indexInSCopy = SCopy.indexOf(letter)
-    if( indexInSCopy > -1){
-    	lengthOfSub++
-      delete SCopy[indexInSCopy]
-      return false
-    }else{
-    	return true
+  if(word.length > theBiggestSubsqnce){
+    let SCopy = S.slice()
+    let lengthOfSubsqnce = 0;
+    let isSubsequence = !word.split('').some( (letter)=> {
+      let indexInSCopy = SCopy.indexOf(letter)
+      if( indexInSCopy > -1){
+        lengthOfSubsqnce++
+        Scopy = SCopy.slice(indexInSCopy, SCopy.length-indexInSCopy)
+        return false
+      }else{
+        return true
+      }
+    })
+    if((lengthOfSubsqnce > theBiggestSubsqnce) && isSubsequence){
+      indexOfThTarget = index
+      theBiggestSubsqnce = lengthOfSubsqnce
     }
-  })
-  if(lengthOfSub > theBiggest){
-  	indexOfThTarget = index
-  	theBiggest = lengthOfSub
-  }
+	}
 })
-//D[indexOfThTarget] is the answer
 console.log(D[indexOfThTarget])
