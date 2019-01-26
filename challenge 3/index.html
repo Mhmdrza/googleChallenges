@@ -1,0 +1,85 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>hhyt</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
+    <div>
+        <span>Enter Compressed string : </span>
+        <input id='compressedString' />
+        <button onclick="decompress()">deCompress</button>
+        <div id='result'></div>
+    </div>
+
+    <script>
+        function decompress() {
+            const input = document.querySelector('#compressedString').value
+            let strings = []
+            let numbers = []
+            let c = 0
+            let tempString = ""
+            let tempNumber = "";
+            while (c < input.length) {
+                const currentCharacter = input.charAt(c)
+                switch (currentCharacter) {
+                    case '[':
+                        strings.push(tempString)
+                        strings.push('♥')
+                        numbers.push(tempNumber)
+                        tempNumber = ''
+                        tempString = ''
+                        break;
+                    case ']':
+                        strings.push(tempString)
+                        tempString = ''
+                        let multipier = numbers.pop()
+                        let justPoped = strings.pop()
+                        let ongoingString = ""
+                        while (justPoped !== '♥') {
+                            ongoingString += justPoped
+                            justPoped = strings.pop()
+                        }
+                        let stringMultipied = ongoingString.repeat(multipier)
+                        strings.push(stringMultipied)
+                        break;
+                    default:
+                        if (isNumber(currentCharacter)) {
+                            tempNumber += currentCharacter
+                        } else {
+                            tempString += currentCharacter
+                        }
+                        break;
+                }
+                c++
+            }
+            console.log(strings, numbers);
+            let result = '';
+            if (strings.length === 0) {
+                result = tempString
+            }
+            while (strings.length > 0) {
+                result += strings.pop()
+            }
+            document.querySelector('#result').textContent = result.split("").reverse().join("")
+        }
+
+        function isNumber(string) {
+            if (string === ' '.repeat(string.length)) {
+                return false
+            }
+            return (string - 1) * 1 === (string * 1) - 1
+        }
+    </script>
+</body>
+
+</html>
